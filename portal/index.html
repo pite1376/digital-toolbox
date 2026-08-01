@@ -10,14 +10,37 @@
   <link rel="stylesheet" href="project-nav.css">
 </head>
 <body>
-  <header class="nav"><a class="brand" href="./">Digital Toolbox</a><a href="https://github.com/pite1376/digital-toolbox">GitHub</a></header>
+  <header class="nav">
+    <a class="brand" href="./">Digital Toolbox</a>
+    <nav class="main-nav" aria-label="主导航">
+      <div class="nav-menu">
+        <button class="nav-trigger" type="button" aria-expanded="false">项目 <span>⌄</span></button>
+        <div class="nav-dropdown project-menu">
+          <a href="#modelbench" data-top-target="modelbench"><b>01</b><span>ModelBench</span></a>
+          <a href="#contentforge" data-top-target="contentforge"><b>02</b><span>ContentForge</span></a>
+          <a href="#life-agent-os" data-top-target="life-agent-os"><b>03</b><span>Life Agent OS</span></a>
+          <a href="#ever" data-top-target="ever"><b>04</b><span>Ever</span></a>
+          <a href="#baichuan-skills" data-top-target="baichuan-skills"><b>05</b><span>Baichuan Skills</span></a>
+        </div>
+      </div>
+      <div class="nav-menu">
+        <button class="nav-trigger" type="button" aria-expanded="false">收藏 <span>⌄</span></button>
+        <div class="nav-dropdown bookmark-menu">
+          <a href="https://aihot.virxact.com/" target="_blank" rel="noopener noreferrer"><small>AI 资讯</small><span>AI HOT</span></a>
+          <a href="https://youtube.qiaomu.ai/" target="_blank" rel="noopener noreferrer"><small>播客索引</small><span>AI 播客索引</span></a>
+          <a href="https://my.feishu.cn/wiki/Q52dwmohyi5dNAkUmMWcTFEfnLq" target="_blank" rel="noopener noreferrer"><small>学习资源</small><span>秋芝的学习资源知识库</span></a>
+          <a href="https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e" target="_blank" rel="noopener noreferrer"><small>AI 知识库</small><span>WaytoAGI 知识库</span></a>
+        </div>
+      </div>
+      <a class="github-link" href="https://github.com/pite1376/digital-toolbox">GitHub</a>
+    </nav>
+  </header>
   <nav class="project-jump" aria-label="项目快速导航">
     <a href="#modelbench" data-project-link="modelbench"><span class="jump-index">01</span><span class="jump-name">ModelBench</span></a>
     <a href="#contentforge" data-project-link="contentforge"><span class="jump-index">02</span><span class="jump-name">ContentForge</span></a>
     <a href="#life-agent-os" data-project-link="life-agent-os"><span class="jump-index">03</span><span class="jump-name">Life Agent OS</span></a>
     <a href="#ever" data-project-link="ever"><span class="jump-index">04</span><span class="jump-name">Ever</span></a>
     <a href="#baichuan-skills" data-project-link="baichuan-skills"><span class="jump-index">05</span><span class="jump-name">Baichuan Skills</span></a>
-    <a class="jump-bookmarks" href="#bookmarks" data-project-link="bookmarks"><span class="jump-index">★</span><span class="jump-name">常用网站</span></a>
   </nav>
   <main>
     <section class="hero">
