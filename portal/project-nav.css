@@ -47,6 +47,7 @@
   opacity: 1;
   transform: scale(1);
 }
+.project-jump .jump-bookmarks { margin-top: 12px; padding-top: 13px; border-top: 1px solid var(--line); }
 
 .jump-index {
   font-family: Georgia, serif;
@@ -142,13 +143,14 @@
   }
 
   .project-jump a {
-    flex: 1 0 auto;
+    flex: 0 0 auto;
     grid-template-columns: 20px auto;
     justify-content: center;
     min-width: 126px;
     min-height: 40px;
     padding: 6px 10px;
   }
+  .project-jump .jump-bookmarks { margin-top: 0; margin-left: 8px; padding-top: 6px; padding-left: 14px; border-top: 0; border-left: 1px solid var(--line); }
 
   .project-jump a::before {
     left: 5px;

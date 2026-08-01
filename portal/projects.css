@@ -3,3 +3,27 @@
   color: #fff;
   transform: rotate(6deg);
 }
+.life-agent-os .project-mark { background: #b7e4c7; transform: rotate(4deg); }
+.compact-projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.project-card.compact { min-height: 330px; grid-template-columns: 48px minmax(0, 1fr); gap: 20px; }
+.project-card.compact .project-copy h2 { font-size: clamp(30px, 3vw, 44px); }
+.project-card.compact .project-mark { position: absolute; top: 28px; right: 28px; width: 72px; font-size: 32px; }
+.ever .project-mark { background: #efb5a3; }
+.baichuan .project-mark { background: #c9c2ff; transform: rotate(5deg); }
+.bookmarks { padding: 12px clamp(22px, 5vw, 72px) 120px; scroll-margin-top: 92px; }
+.section-heading { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 420px); align-items: end; gap: 20px; padding: 54px 0 34px; border-top: 1px solid var(--ink); }
+.section-heading .eyebrow { grid-column: 1 / -1; margin: 0; }
+.section-heading h2 { margin: 0; font: 400 clamp(40px, 5vw, 70px)/1 Georgia, "Songti SC", serif; letter-spacing: -.045em; }
+.section-heading > p:last-child { margin: 0; color: var(--muted); line-height: 1.7; }
+.bookmark-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.bookmark-card { min-height: 230px; padding: clamp(22px, 3vw, 34px); display: flex; flex-direction: column; border: 1px solid var(--line); background: rgba(250, 248, 242, .65); transition: border-color .18s ease, transform .18s ease, background .18s ease; }
+.bookmark-card:hover { border-color: var(--ink); background: #faf8f2; transform: translateY(-3px); }
+.bookmark-type { color: var(--blue); font-size: 11px; font-weight: 850; letter-spacing: .14em; }
+.bookmark-card strong { margin-top: 22px; font: 400 clamp(24px, 3vw, 36px)/1.15 Georgia, "Songti SC", serif; letter-spacing: -.025em; }
+.bookmark-card p { max-width: 440px; margin: 15px 0 28px; color: var(--muted); line-height: 1.65; }
+.bookmark-domain { display: flex; justify-content: space-between; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+.bookmark-domain b { color: var(--ink); font-size: 16px; }
+@media (min-width: 1201px) { .bookmarks { padding-right: max(190px, 12vw); } }
+@media (min-width: 769px) and (max-width: 1200px) { .bookmarks { padding-right: 68px; } }
+@media (max-width: 760px) { .compact-projects, .bookmark-grid, .section-heading { grid-template-columns: 1fr; } .project-card.compact { grid-template-columns: 1fr; } .section-heading .eyebrow { grid-column: auto; } .bookmark-card { min-height: 210px; } }
+@media (prefers-reduced-motion: reduce) { .bookmark-card { transition: none; } }
