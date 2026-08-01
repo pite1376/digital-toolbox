@@ -7,9 +7,14 @@
   <title>Digital Toolbox</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="projects.css">
+  <link rel="stylesheet" href="project-nav.css">
 </head>
 <body>
   <header class="nav"><a class="brand" href="./">Digital Toolbox</a><a href="https://github.com/pite1376/digital-toolbox">GitHub</a></header>
+  <nav class="project-jump" aria-label="项目快速导航">
+    <a href="#modelbench" data-project-link="modelbench"><span class="jump-index">01</span><span class="jump-name">ModelBench</span></a>
+    <a href="#contentforge" data-project-link="contentforge"><span class="jump-index">02</span><span class="jump-name">ContentForge</span></a>
+  </nav>
   <main>
     <section class="hero">
       <p class="eyebrow">TOOLS FOR CLEARER WORK</p>
@@ -17,7 +22,7 @@
       <p class="intro">一个持续更新的小工具合集，聚焦 AI、网页内容、文档和日常效率。</p>
     </section>
     <section class="projects">
-      <article class="project-card modelbench">
+      <article class="project-card modelbench" id="modelbench" data-project="modelbench">
         <div class="project-index">01</div>
         <div class="project-copy">
           <p class="tag">AI MODEL COMPARISON</p>
@@ -28,7 +33,7 @@
         </div>
         <div class="project-mark">MB</div>
       </article>
-      <article class="project-card">
+      <article class="project-card" id="contentforge" data-project="contentforge">
         <div class="project-index">02</div>
         <div class="project-copy">
           <p class="tag">BROWSER EXTENSION · WEB APP</p>
@@ -42,5 +47,6 @@
     </section>
   </main>
   <footer><span>Digital Toolbox</span><span>Open source under MIT</span></footer>
+  <script src="project-nav.js"></script>
 </body>
 </html>
