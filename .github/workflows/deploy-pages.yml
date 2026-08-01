@@ -27,7 +27,8 @@ jobs:
         run: |
           mkdir -p _site/contentforge
           cp -R portal/. _site/
-          cp -R projects/contentforge/web/. _site/contentforge/
+          cp -R projects/contentforge/extension/. _site/contentforge/
+          cp projects/contentforge/extension/tab.html _site/contentforge/index.html
           touch _site/.nojekyll
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -38,4 +39,3 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-

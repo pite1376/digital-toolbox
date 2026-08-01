@@ -1,0 +1,5 @@
+.modelbench .project-mark {
+  background: var(--blue);
+  color: #fff;
+  transform: rotate(6deg);
+}

@@ -3,6 +3,11 @@
 // 1) 兼容 MV3 CSP：不使用内联脚本/内联 onclick
 // 2) popup 宽度默认 600px；左右分栏比例可拖拽并持久化（chrome.storage.local）
 
+// 同一份 tab.html 也会发布到 GitHub Pages。
+// 普通网页没有 Chrome 扩展 API，保留纯前端功能并对扩展专属能力给出明确提示。
+if (typeof globalThis.chrome === 'undefined') globalThis.chrome = {};
+const IS_EXTENSION_ENV = !!globalThis.chrome?.runtime?.id;
+
 // 全局状态管理
 const state = {
   mode: 'image',
@@ -2666,6 +2671,10 @@ function waitForTabComplete(tabId, timeoutMs = 20000) {
 }
 
 async function grabWebUrl(rawUrl) {
+  if (!IS_EXTENSION_ENV) {
+    showToast('输入链接抓取需要安装 ContentForge 浏览器扩展', 'error');
+    return;
+  }
   let url;
   try {
     url = normalizeWebUrl(rawUrl);
@@ -2702,6 +2711,10 @@ async function grabWebUrl(rawUrl) {
 }
 
 async function grabWebPage(selectMode) {
+  if (!IS_EXTENSION_ENV) {
+    showToast('当前页抓取与区域选取需要安装 ContentForge 浏览器扩展', 'error');
+    return;
+  }
   try {
     const tab = await getWebSourceTab();
     if (!tab?.id) {

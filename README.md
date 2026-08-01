@@ -4,6 +4,13 @@
 
 ## Projects
 
+### ModelBench
+
+AI 模型横向对比平台。将同一个问题同时发送给多个模型，实时对比回答质量、响应速度和 token 消耗。
+
+- [在线体验](https://pite1376.github.io/ModelBench/)
+- [GitHub 仓库](https://github.com/pite1376/ModelBench)
+
 ### 内容工坊 ContentForge
 
 一站式网页内容采集、清洗、整理与导出工具。
@@ -20,8 +27,7 @@
 ## Repository layout
 
 ```text
-projects/contentforge/extension/  浏览器扩展
-projects/contentforge/web/        静态网页版
+projects/contentforge/extension/  浏览器扩展与同源网页版
 portal/                           项目合集首页
 .github/workflows/                GitHub Pages 部署
 ```
@@ -29,4 +35,3 @@ portal/                           项目合集首页
 ## License
 
 [MIT](LICENSE)
-
