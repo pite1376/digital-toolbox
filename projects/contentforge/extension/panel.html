@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内容工坊 ContentForge</title>
+  <!-- 复用现有样式，再用 panel.css 覆盖成侧边栏布局 -->
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="panel.css" />
+</head>
+<body>
+  <!-- 展示区（主体，滚动） -->
+  <main class="content" id="mainContainer">
+    <div class="content-top">
+      <div class="pill" id="statsDisplay">
+        <span id="imageCount">0</span>
+      </div>
+      <div class="content-actions">
+        <button class="web-entry-btn" id="webCaptureEntryBtn" type="button">网页抓取</button>
+        <select class="pill pill-select" id="gridColsSelect" title="列数">
+          <option value="auto">自动</option>
+          <option value="2">2列</option>
+          <option value="3">3列</option>
+          <option value="4">4列</option>
+          <option value="5">5列</option>
+          <option value="6">6列</option>
+        </select>
+        <button class="icon-btn" id="grabPageBtn" title="抓取当前页图片" type="button" aria-label="抓取当前页图片">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3l2-2h6l2 2h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2z"></path>
+            <circle cx="12" cy="13" r="3"></circle>
+          </svg>
+        </button>
+        <button class="icon-btn" id="zipAllBtn" style="display:none;" title="ZIP全部" type="button" aria-label="ZIP全部">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73z"></path>
+            <path d="M3.3 7l8.7 5 8.7-5"></path>
+            <path d="M12 22V12"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" id="clearGalleryBtn" title="清空展示区" type="button" aria-label="清空展示区">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18"></path>
+            <path d="M8 6V4h8v2"></path>
+            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+            <path d="M10 11v6"></path>
+            <path d="M14 11v6"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" id="historyBtn" title="历史记录" type="button" aria-label="历史记录">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 6v6l4 2"></path>
+          </svg>
+        </button>
+        <button class="icon-btn" id="openTabBtn" title="打开网页版" type="button" aria-label="打开网页版">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 3h7v7"></path>
+            <path d="M10 14L21 3"></path>
+            <path d="M21 14v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <section class="content-scroll" id="gallerySection">
+      <div id="galleryContent"></div>
+    </section>
+  </main>
+
+  <!-- 输入区（固定底部，毛玻璃） -->
+  <footer class="composer" id="controlPanel">
+    <div class="composer-box" id="composerBox">
+      <!-- 上边沿拖拽区域（用于调整高度） -->
+      <div class="composer-edge" id="composerEdge" aria-label="拖拽调整输入框高度">
+        <span class="composer-edge-icon" id="composerEdgeIcon">↕</span>
+      </div>
+
+      <select class="composer-mode" id="modeSelect" title="处理类型">
+        <option value="auto">自动</option>
+        <option value="image">图片</option>
+        <option value="text">文本</option>
+        <option value="json">JSON</option>
+      </select>
+      <!-- 右上角：一键展开/收起（根据状态显示一个箭头） -->
+      <button class="composer-toggle" id="composerToggleBtn" type="button" title="展开/收起输入框高度" aria-label="展开/收起输入框高度">
+        <!-- 图标由 JS 根据状态切换 -->
+      </button>
+      <textarea class="composer-input" id="inputText" placeholder="粘贴内容、链接或 JSON…"></textarea>
+      <button class="send-btn" id="processBtn" type="button" disabled aria-label="发送">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19V5"></path>
+          <path d="M5 12l7-7 7 7"></path>
+        </svg>
+      </button>
+    </div>
+    <div class="composer-hint" id="inputHint">自动识别：优先图片链接 → JSON → 文本（也可下拉手动指定）</div>
+  </footer>
+
+  <!-- 历史记录抽屉 -->
+  <div class="history-drawer" id="historyDrawer">
+    <div class="history-header">
+      <h3 class="history-title">历史记录</h3>
+      <button class="btn-icon" id="closeHistoryBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="history-body" id="historyBody"></div>
+  </div>
+
+  <!-- 右键菜单（保留） -->
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" id="copyImageMenu">复制图片</div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" id="copyLinkMenu">复制链接</div>
+    <div class="context-menu-item" id="downloadMenu">下载图片</div>
+    <div class="context-menu-item" id="previewMenu">新标签页预览</div>
+  </div>
+
+  <!-- 调试信息 -->
+  <div class="debug-info" id="debugInfo" style="display:none;">
+    <div class="debug-info-title">调试信息</div>
+    <div id="debugContent"></div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <!-- 图片预览弹层 -->
+  <div class="image-preview-backdrop" id="imagePreviewBackdrop">
+    <div class="image-preview-dialog" id="imagePreviewDialog">
+      <div class="image-preview-header">
+        <button class="image-preview-close" id="imagePreviewPrevBtn" type="button">上一张</button>
+        <div class="image-preview-index" id="imagePreviewIndex">1 / 1</div>
+        <button class="image-preview-close" id="imagePreviewNextBtn" type="button">下一张</button>
+        <button class="image-preview-close" id="imagePreviewResetBtn" type="button">复位</button>
+        <button class="image-preview-close" id="imagePreviewCloseBtn" type="button">关闭</button>
+      </div>
+      <div class="image-preview-body">
+        <button class="image-preview-nav image-preview-nav-left" id="imagePreviewLeftHotspot" type="button" aria-label="上一张">‹</button>
+        <img id="imagePreviewImg" src="" alt="预览图片" />
+        <button class="image-preview-nav image-preview-nav-right" id="imagePreviewRightHotspot" type="button" aria-label="下一张">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastMessage">操作成功</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

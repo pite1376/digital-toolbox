@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "内容工坊 ContentForge",
+  "version": "0.5.0",
+  "description": "一站式网页内容采集、清洗、整理与导出工具",
+  "action": {
+    "default_title": "内容工坊 ContentForge",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "downloads", "activeTab", "tabs", "scripting", "sidePanel"],
+  "host_permissions": ["<all_urls>"]
+}

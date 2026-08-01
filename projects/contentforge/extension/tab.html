@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>内容工坊 ContentForge</title>
+  <link rel="stylesheet" href="popup.css" />
+  <link rel="stylesheet" href="tab.css" />
+</head>
+<body>
+  <!-- 复用同一套界面结构（与 popup.html 保持一致） -->
+  <header class="header">
+    <div class="logo">内容工坊 ContentForge</div>
+    <div class="header-actions">
+      <button class="web-entry-btn" id="webCaptureEntryBtn" type="button">网页抓取</button>
+      <button class="btn-icon" id="debugBtn" title="调试信息" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 9h.01"></path>
+          <path d="M15 9h.01"></path>
+          <path d="M10 13a2 2 0 0 0 4 0"></path>
+          <path d="M12 2a6 6 0 0 0-6 6v3a3 3 0 0 0-2 3v2h16v-2a3 3 0 0 0-2-3V8a6 6 0 0 0-6-6z"></path>
+          <path d="M8 22v-2"></path>
+          <path d="M16 22v-2"></path>
+        </svg>
+      </button>
+      <button class="btn-icon" id="historyBtn" title="历史记录" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="main-container" id="mainContainer">
+    <section class="gallery-section" id="gallerySection">
+      <div class="gallery-header">
+        <div>
+          <h2 class="gallery-title">展示区</h2>
+        </div>
+        <div class="gallery-stats">
+          <span class="stats-badge" id="statsDisplay">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span id="imageCount">0</span> 张图片
+          </span>
+          <select class="select-compact" id="gridColsSelect" title="设置展示列数">
+            <option value="auto">列：自动</option>
+            <option value="2">列：2</option>
+            <option value="3">列：3</option>
+            <option value="4">列：4</option>
+            <option value="5">列：5</option>
+            <option value="6">列：6</option>
+          </select>
+          <button class="btn-primary" id="selectAllBtn" style="display: none;" type="button">全选</button>
+          <button class="btn-primary" id="downloadSelectedBtn" style="display: none;" type="button">
+            下载选中 (<span id="selectedCount">0</span>)
+          </button>
+          <button class="btn-primary btn-success" id="downloadAllBtn" style="display: none;" type="button">下载全部</button>
+          <button class="btn-secondary btn-mini" id="zipSelectedBtn" style="display: none;" type="button" title="将选中图片打包为ZIP">ZIP选中</button>
+          <button class="btn-secondary btn-mini" id="zipAllBtn" style="display: none;" type="button" title="将全部图片打包为ZIP">ZIP全部</button>
+        </div>
+      </div>
+
+      <div id="galleryContent"></div>
+    </section>
+
+    <div class="splitter" id="splitter" title="拖拽调整左右比例"></div>
+
+    <aside class="control-panel" id="controlPanel">
+      <div class="control-header">
+        <h3 class="control-title">控制台</h3>
+        <div class="mode-switcher">
+          <button class="mode-btn active" data-mode="image" type="button">图片链接</button>
+          <button class="mode-btn" data-mode="text" type="button">文本清洗</button>
+          <button class="mode-btn" data-mode="json" type="button">JSON识别</button>
+        </div>
+      </div>
+
+      <div class="control-body">
+        <div class="input-group">
+          <label class="input-label" for="inputText">输入内容</label>
+          <textarea class="input-textarea" id="inputText"></textarea>
+          <div class="input-hint" id="inputHint"></div>
+          <div class="image-options" id="imageOptions" style="display:none;">
+            <label class="opt">
+              <input type="checkbox" id="filterSmallChk" checked />
+              过滤小图(&lt;32px)
+            </label>
+            <button class="btn-secondary btn-mini" id="grabPageBtn" type="button">抓取当前页图片</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-actions">
+        <button class="btn-secondary" id="clearBtn" type="button">清空</button>
+        <button class="btn-process" id="processBtn" type="button">开始处理</button>
+      </div>
+    </aside>
+  </div>
+
+  <div class="history-drawer" id="historyDrawer">
+    <div class="history-header">
+      <h3 class="history-title">历史记录</h3>
+      <button class="btn-icon" id="closeHistoryBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="history-body" id="historyBody"></div>
+  </div>
+
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" id="copyImageMenu">复制图片</div>
+    <div class="context-menu-divider"></div>
+    <div class="context-menu-item" id="copyLinkMenu">复制链接</div>
+    <div class="context-menu-item" id="downloadMenu">下载图片</div>
+    <div class="context-menu-item" id="previewMenu">新标签页预览</div>
+  </div>
+
+  <div class="debug-info" id="debugInfo">
+    <div class="debug-info-title">调试信息</div>
+    <div id="debugContent"></div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <div class="image-preview-backdrop" id="imagePreviewBackdrop">
+    <div class="image-preview-dialog" id="imagePreviewDialog">
+      <div class="image-preview-header">
+        <button class="image-preview-close" id="imagePreviewResetBtn" type="button">复位</button>
+        <button class="image-preview-close" id="imagePreviewCloseBtn" type="button">关闭</button>
+      </div>
+      <div class="image-preview-body">
+        <img id="imagePreviewImg" src="" alt="预览图片" />
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toastMessage">操作成功</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

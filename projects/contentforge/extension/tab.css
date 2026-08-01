@@ -1,0 +1,43 @@
+/* 标签页版：覆盖 popup 的固定尺寸限制 */
+html, body {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body{
+  overflow: hidden;
+}
+
+/* 让展示区更舒服一点 */
+.gallery-section{
+  padding: 20px;
+}
+
+
+
+/* 输入区：填满 control-body，textarea 自动撑高 */
+/* 输入区：填满 control-body，textarea 自动撑高 */
+.control-body{
+  display:flex;
+  flex-direction:column;
+  overflow:visible;
+  padding-bottom:0;
+}
+.input-group{
+  display:flex;
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+}
+.input-textarea{
+  flex:1;
+  min-height:0;
+  height:auto;
+  resize:none;                 /* 禁用拖拽调整，由 flex 控制高度 */
+}
+
+/* 网页文本有结果后，独立页切换为全宽文档工作台 */
+.web-workspace-mode .control-panel,
+.web-workspace-mode .splitter{display:none;}
+.web-workspace-mode .gallery-section{width:100%;max-width:none;}
+.web-workspace-mode #galleryContent{min-height:0;overflow:auto;}

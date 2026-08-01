@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ContentForge 内容工坊网页版">
+  <title>内容工坊 ContentForge</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <a class="brand" href="../"><span>CF</span><b>内容工坊</b><small>ContentForge</small></a>
+    <nav><a href="../">项目合集</a><a href="https://github.com/pite1376/digital-toolbox/tree/main/projects/contentforge">源码</a></nav>
+  </header>
+  <main>
+    <aside class="sidebar">
+      <p class="label">TOOLS</p>
+      <button class="tool active" data-tool="text"><span>01</span>文本清洗</button>
+      <button class="tool" data-tool="json"><span>02</span>JSON 整理</button>
+      <button class="tool" data-tool="images"><span>03</span>图片链接</button>
+      <button class="tool" data-tool="document"><span>04</span>文档编辑</button>
+      <div class="extension-note"><b>需要抓取网页？</b><p>当前页抓取、区域选取和飞书文档采集需要安装浏览器扩展。</p><a href="https://github.com/pite1376/digital-toolbox/tree/main/projects/contentforge/extension">查看安装方法 ↗</a></div>
+    </aside>
+    <section class="workspace">
+      <div class="workspace-head"><div><p class="label" id="modeLabel">TEXT CLEANER</p><h1 id="modeTitle">文本清洗</h1><p id="modeDescription">去除 Markdown 符号、多余空行和不必要的格式。</p></div><div class="head-actions"><button id="clearBtn">清空</button><button class="primary" id="processBtn">开始处理</button></div></div>
+      <div class="editor-grid">
+        <div class="editor-pane"><label>输入</label><textarea id="sourceInput" spellcheck="false" placeholder="粘贴需要处理的内容…"></textarea></div>
+        <div class="editor-pane output"><div class="output-head"><label>结果</label><span id="resultStats">0 字符</span></div><textarea id="resultOutput" spellcheck="false" placeholder="处理结果将显示在这里…"></textarea></div>
+      </div>
+      <div class="result-actions"><button id="copyBtn">复制结果</button><div class="spacer"></div><button data-export="docx">Word</button><button data-export="md">Markdown</button><button data-export="txt">纯文本</button></div>
+    </section>
+  </main>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
+
