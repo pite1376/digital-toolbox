@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ContentForge Promo</title>
+  <style>
+    * { box-sizing:border-box; }
+    html,body { width:440px; height:280px; margin:0; overflow:hidden; }
+    body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; }
+    .tile { position:relative; width:440px; height:280px; overflow:hidden; background:#f8fbff url("assets/promo-background-generated.png") center/cover no-repeat; }
+    .tile::after { content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(255,255,255,.99) 0%,rgba(255,255,255,.96) 36%,rgba(255,255,255,.28) 62%,rgba(255,255,255,0) 100%); }
+    .copy { position:absolute; z-index:1; left:27px; top:29px; width:242px; }
+    .brand { display:flex; align-items:center; gap:9px; color:#125fcb; font-size:13px; font-weight:750; letter-spacing:.01em; }
+    .brand img { width:35px; height:35px; filter:drop-shadow(0 6px 10px rgba(22,119,255,.16)); }
+    h1 { margin:21px 0 8px; color:#172033; font-size:31px; line-height:1.05; letter-spacing:-.045em; }
+    h1 span { display:block; color:#1677ff; font-size:22px; letter-spacing:-.02em; margin-top:5px; }
+    p { margin:0; width:218px; color:#5d6879; font-size:13px; line-height:1.55; font-weight:520; }
+    .chips { display:flex; gap:6px; margin-top:20px; }
+    .chips span { padding:5px 9px; border:1px solid #dbe9ff; border-radius:999px; background:rgba(255,255,255,.86); color:#2168c6; font-size:10px; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="tile">
+    <div class="copy">
+      <div class="brand"><img src="../extension/icons/icon128.png" alt="">内容工坊</div>
+      <h1>ContentForge<span>网页内容，一键整理</span></h1>
+      <p>抓取、清洗、编辑并导出你主动选择的网页与文本内容。</p>
+      <div class="chips"><span>本地处理</span><span>多格式导出</span></div>
+    </div>
+  </div>
+</body>
+</html>

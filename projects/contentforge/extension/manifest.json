@@ -2,6 +2,7 @@
   "manifest_version": 3,
   "name": "内容工坊 ContentForge",
   "version": "0.5.0",
+  "minimum_chrome_version": "114",
   "description": "一站式网页内容采集、清洗、整理与导出工具",
   "action": {
     "default_title": "内容工坊 ContentForge",
@@ -24,6 +25,6 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "downloads", "activeTab", "tabs", "scripting", "sidePanel"],
-  "host_permissions": ["<all_urls>"]
+  "permissions": ["storage", "scripting", "sidePanel"],
+  "host_permissions": ["http://*/*", "https://*/*"]
 }

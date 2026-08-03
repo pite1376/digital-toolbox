@@ -119,6 +119,7 @@ async function initApp() {
     selectedCount: document.getElementById('selectedCount'),
     historyBtn: document.getElementById('historyBtn'),
     historyDrawer: document.getElementById('historyDrawer'),
+    clearHistoryBtn: document.getElementById('clearHistoryBtn'),
     closeHistoryBtn: document.getElementById('closeHistoryBtn'),
     historyBody: document.getElementById('historyBody'),
     overlay: document.getElementById('overlay'),
@@ -574,6 +575,7 @@ function bindEvents() {
 
   // 历史记录
   if (elements.historyBtn) elements.historyBtn.addEventListener('click', openHistory);
+  if (elements.clearHistoryBtn) elements.clearHistoryBtn.addEventListener('click', clearHistory);
   if (elements.closeHistoryBtn) elements.closeHistoryBtn.addEventListener('click', closeHistory);
   if (elements.overlay) elements.overlay.addEventListener('click', closeHistory);
 
@@ -3284,6 +3286,34 @@ async function idbGetFull(id) {
   }
 }
 
+async function idbDeleteFull(id) {
+  try {
+    const db = await openIdb();
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).delete(id);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => reject(tx.error);
+    });
+  } catch (e) {
+    return false;
+  }
+}
+
+async function idbClearFull() {
+  try {
+    const db = await openIdb();
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).clear();
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => reject(tx.error);
+    });
+  } catch (e) {
+    return false;
+  }
+}
+
 async function saveToHistory(input, mode) {
   const id = Date.now();
   const tooLarge = input.length > 50000; // 保护 localStorage（约 5MB 上限，且各浏览器不同）
@@ -3304,7 +3334,10 @@ async function saveToHistory(input, mode) {
   };
 
   state.history.unshift(record);
-  if (state.history.length > 50) state.history = state.history.slice(0, 50);
+  if (state.history.length > 50) {
+    const removed = state.history.splice(50);
+    await Promise.all(removed.map((item) => idbDeleteFull(item.id)));
+  }
   localStorage.setItem('imageProcessHistory', JSON.stringify(state.history));
   renderHistory();
 }
@@ -3325,6 +3358,7 @@ function loadHistory() {
 
 function renderHistory() {
   if (!elements.historyBody) return;
+  if (elements.clearHistoryBtn) elements.clearHistoryBtn.disabled = state.history.length === 0;
   if (state.history.length === 0) {
     elements.historyBody.innerHTML = `
       <div class="empty-state" style="padding: 24px 16px;">
@@ -3367,6 +3401,17 @@ function renderHistory() {
     item.appendChild(meta);
     elements.historyBody.appendChild(item);
   });
+}
+
+async function clearHistory() {
+  if (!state.history.length) return;
+  if (!window.confirm('确定清空全部历史记录吗？此操作无法撤销。')) return;
+  if (elements.clearHistoryBtn) elements.clearHistoryBtn.disabled = true;
+  await idbClearFull();
+  localStorage.removeItem('imageProcessHistory');
+  state.history = [];
+  renderHistory();
+  showToast('历史记录已清空', 'success');
 }
 
 async function restoreHistory(id) {

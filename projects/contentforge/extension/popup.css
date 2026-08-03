@@ -674,6 +674,18 @@ body[data-grid-cols="6"] .gallery-grid{ grid-template-columns: repeat(6, 1fr); }
   align-items:center;
 }
 .history-title{ font-size:14px; font-weight:700; }
+.history-actions{ display:flex; align-items:center; gap:6px; }
+.history-clear{
+  border:0;
+  background:transparent;
+  color:var(--text-tertiary);
+  padding:6px 8px;
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  font-size:12px;
+}
+.history-clear:hover{ color:#c62828; background:rgba(198,40,40,.08); }
+.history-clear:disabled{ opacity:.45; cursor:default; }
 .history-body{ flex:1; overflow:auto; padding:12px; }
 .history-item{
   border:1px solid var(--border-color);
