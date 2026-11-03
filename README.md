@@ -4,13 +4,6 @@
 
 ## Projects
 
-### ModelBench
-
-AI 模型横向对比平台。将同一个问题同时发送给多个模型，实时对比回答质量、响应速度和 token 消耗。
-
-- [在线体验](https://pite1376.github.io/ModelBench/)
-- [GitHub 仓库](https://github.com/pite1376/ModelBench)
-
 ### 内容工坊 ContentForge
 
 一站式网页内容采集、清洗、整理与导出工具。
